@@ -65,10 +65,25 @@ function drawDoneCards(){
     return output;
 }
 
+function deleteTask(index){
+    tasks.splice(index, 1);
+    drawAllCards();
+}
+
 function drawAllCards(){
     document.getElementById('todo-cards').innerHTML = drawTodoCards();
     document.getElementById('doing-cards').innerHTML = drawDoingCards();
     document.getElementById('done-cards').innerHTML = drawDoneCards();
+    
+    // Add event listeners for delete
+    document.querySelectorAll('[id^="delete-task-"]').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            let id = this.id;
+            let index = parseInt(id.replace('delete-task-', ''));
+            deleteTask(index);
+        });
+    });
 }
 
 function createTask(){
